@@ -5,13 +5,13 @@ Web:
 Client:
   appName: raspinodemon
   apiUrlStart: "/api/bitcoind"
-  pageName: "12SHIPS Private Bitcoin Network monitor"
+  pageName: "my bitcoin fullnode"
 
 RPC:
   host: localhost
-  port: 9122
-  rpc_username: bitcoinrpc
-  rpc_password: 1234asdf
+  port: 8332
+  rpc_username: <some username>
+  rpc_password: <a very secret password>
   concurrency: 100
 
 Zmq:
@@ -23,7 +23,7 @@ Zmq:
     - "rawtx"
     
 Bitcoin:
-  homeDir: '~/2'
+  homeDir: '~/.bitcoin'
 
 Api:
   restCalls:

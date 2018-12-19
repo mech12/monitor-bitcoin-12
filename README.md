@@ -1,3 +1,7 @@
+# 12SHIPS Private Bitcoin Network monitor
+
+
+
 # 01C Node
 
 This is a webfrontend for a full bitcoin node. Bitcoin-core is running as the backend and this little app allows you to see the status of the node through an easy graphical web frontend. 

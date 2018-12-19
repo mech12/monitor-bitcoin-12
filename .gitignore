@@ -1,5 +1,11 @@
+package-lock.json
 node_modules
 bower_components/
 static/bundle.js
 *.swp
 .cache*
+
+npm_start.error
+npm_start.log
+server.log
+

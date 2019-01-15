@@ -8,7 +8,7 @@ Client:
   pageName: "12SHIPS Private Bitcoin Network monitor"
 
 RPC:
-  host: localhost
+  host: test.alle.hansandopool.com
   port: 9112
   rpc_username: bitcoinrpc
   rpc_password: 1234asdf

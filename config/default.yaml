@@ -9,7 +9,7 @@ Client:
 
 RPC:
   host: localhost
-  port: 9122
+  port: 9112
   rpc_username: bitcoinrpc
   rpc_password: 1234asdf
   concurrency: 100
@@ -23,7 +23,7 @@ Zmq:
     - "rawtx"
     
 Bitcoin:
-  homeDir: '~/2'
+  homeDir: '/home/ubuntu/1/'
 
 Api:
   restCalls:

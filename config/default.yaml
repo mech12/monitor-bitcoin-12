@@ -8,8 +8,8 @@ Client:
   pageName: "OlleNature ON-Point monitor"
 
 RPC:
-  host: localhost
-  port: 9112
+  host: test-olle
+  port: 9122
   rpc_username: bitcoinrpc
   rpc_password: 1234asdf
   concurrency: 100

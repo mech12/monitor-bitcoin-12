@@ -1,14 +1,14 @@
 ---
 Web:
-  port: 5000
+  port: 9009
 
 Client:
   appName: raspinodemon
   apiUrlStart: "/api/bitcoind"
-  pageName: "12SHIPS Private Bitcoin Network monitor"
+  pageName: "OlleNature ON-Point monitor"
 
 RPC:
-  host: test.alle.hansandopool.com
+  host: localhost
   port: 9112
   rpc_username: bitcoinrpc
   rpc_password: 1234asdf

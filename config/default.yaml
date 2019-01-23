@@ -5,11 +5,11 @@ Web:
 Client:
   appName: raspinodemon
   apiUrlStart: "/api/bitcoind"
-  pageName: "OlleNature ON-Point monitor"
+  pageName: "OlleNature Chain (ONC)"
 
 RPC:
-  host: test-olle
-  port: 9122
+  host: 127.0.0.1
+  port: 9112
   rpc_username: bitcoinrpc
   rpc_password: 1234asdf
   concurrency: 100
@@ -23,7 +23,7 @@ Zmq:
     - "rawtx"
     
 Bitcoin:
-  homeDir: '/home/ubuntu/1/'
+  homeDir: '/Users/roy/1/'
 
 Api:
   restCalls:

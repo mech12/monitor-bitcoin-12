@@ -8,13 +8,15 @@
     "watch": "watchify js/app.js --poll=1000 -o static/bundle.js -vvv",
     "build": "browserify js/app.js | uglifyjs -mc warnings=false > static/bundle.js",
     "check-updates": "./node_modules/npm-check-updates/bin/npm-check-updates",
-    "start": "nodemon --watch server.js --watch js/api 2> npm_start.error| tee -a npm_start.log"
+    "start": "nodemon 2> npm_start.error| tee -a npm_start.log",
+    "start2": "nodemon --watch server.js --watch js/api 2> npm_start.error| tee -a npm_start.log"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/KanoczTomas/01Cnode.git"
   },
   "keywords": [
+    "12ships",
     "bitcoin",
     "angularjs",
     "mempool",
@@ -37,6 +39,9 @@
     "angular": "^1.7.2",
     "angular-socket-io": "^0.7.0",
     "async-work-queue": "^0.3.0",
+    "bitcoin-core": "^2.0.0",
+    "bitcoin-util-fee": "0.0.6",
+    "bitcoinfees-21co": "0.0.3",
     "bitcoinjs-lib": "^4.0.1",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",

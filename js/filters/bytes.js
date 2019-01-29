@@ -85,3 +85,4 @@ angular.module(config.get("Client.appName"))
         return h.toFixed(precision) +  ' ' + units[number];;
 	}
 });
+

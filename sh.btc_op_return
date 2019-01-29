@@ -1,0 +1,4 @@
+pushd $HOME/12ships/monitor-bitcoin-12
+node btc_op_return.js $1 $2 $3 $4 $5
+popd
+

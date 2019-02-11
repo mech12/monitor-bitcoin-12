@@ -10,7 +10,8 @@ var getSize = require('nodejs-fs-utils').fsize;
 Promise.promisifyAll(getSize);
 
 
-bitcoinRPC.init(config.get('RPC.host'), config.get('RPC.port'), config.get('RPC.rpc_username'), config.get('RPC.rpc_password'));
+let pass = process.env.OLLE_RPC_PASS;//config.get('RPC.rpc_password')
+bitcoinRPC.init(config.get('RPC.host'), config.get('RPC.port'), config.get('RPC.rpc_username'), pass);
 
 bitcoind.get("/status", function(req, res){
 	var info = {

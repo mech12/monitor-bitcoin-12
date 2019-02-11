@@ -17,7 +17,8 @@ else if (node_num == 3)
     port = 9132;
 
 
-bitcoinRPC.init('test-olle', port, config.get('RPC.rpc_username'), config.get('RPC.rpc_password'));
+let pass = process.env.OLLE_RPC_PASS;//config.get('RPC.rpc_password')
+bitcoinRPC.init('test-olle', port, config.get('RPC.rpc_username'), pass);
 
 try {
     var a = bitcoinRPC.callAsync(cmd, args);

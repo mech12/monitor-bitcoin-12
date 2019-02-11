@@ -11,7 +11,7 @@ RPC:
   host: 127.0.0.1
   port: 9112
   rpc_username: bitcoinrpc
-  rpc_password: 1234asdf
+  colored_address: 1LXZp1j9U6VBUfKvqYtFrpDhE5r1LFijw1
   concurrency: 100
 
 Zmq:

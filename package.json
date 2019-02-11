@@ -8,7 +8,7 @@
     "watch": "watchify js/app.js --poll=1000 -o static/bundle.js -vvv",
     "build": "browserify js/app.js | uglifyjs -mc warnings=false > static/bundle.js",
     "check-updates": "./node_modules/npm-check-updates/bin/npm-check-updates",
-    "start": "nodemon 2> npm_start.error| tee -a npm_start.log",
+    "start": "nodemon --watch server.js",
     "start2": "nodemon --watch server.js --watch js/api 2> npm_start.error| tee -a npm_start.log"
   },
   "repository": {
@@ -46,6 +46,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "buffer": "^5.1.0",
+    "bull-ui": "^1.2.3",
     "cache-require-paths": "^0.3.0",
     "compression": "^1.7.3",
     "config": "^1.31.0",
@@ -62,6 +63,7 @@
     "qr-image": "^3.2.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
+    "satoshi-bitcoin": "^1.0.4",
     "simple-promise-queue": "^0.1.7",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",

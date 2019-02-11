@@ -28,6 +28,26 @@ var queue = new Queue({
     concurrency: config.get('RPC.concurrency')
 });
 
+const rootDir = path.normalize(__dirname);
+//console.log('config.rootDir=' , rootDir , '__dirname=',__dirname);
+global.g_G = require('../api/mech12/g_G').Init({
+    globalVar: rootDir + '/setting_global',
+    loadingPath: rootDir + '/../api/util/',
+    loadingPattern: 'util_',
+    settingFilePath: rootDir + '/../api/', // setting_<SERVICE_MODE>.js file path 
+    rootDir: rootDir,
+});
+
+g_G.backend_server_init((ret, CB) => {
+    g_G.load_modules(rootDir + '/../api/db/', 'db_');
+});
+app.use(function(req, res, next) {
+    req.__startTime = new Date();
+    next() // otherwise continue
+})
+
+app.get('/health', function(req, res) { res.sendStatus(200); })
+
 
 server.listen(config.get('Web.port'));
 app.use(compression());
@@ -39,6 +59,9 @@ console.log("server is now running on port " + config.get('Web.port'));
 
 app.use('/api/', api);
 app.use('/', express.static(__dirname + '/static'));
+
+const matador = require('bull-ui/app')(g_G.ENV.queue_endpoint);
+require('./routes')(app, matador);
 
 if (process.env.NODE_ENV !== 'production') {
     process.once('uncaughtException', function(err) {
@@ -60,9 +83,12 @@ io.on('connection', function(data) {
     //console.log(data);
 });
 
-bitcoinRPC.init(config.get('RPC.host'), config.get('RPC.port'), config.get('RPC.rpc_username'), config.get('RPC.rpc_password'));
+bitcoinRPC.init(config.get('RPC.host'),
+    config.get('RPC.port'),
+    config.get('RPC.rpc_username'),
+    process.env.OLLE_RPC_PASS);
 
-function getFeeOfTx(txid) {
+async function getFeeOfTx(txid) {
     //returns a promise and fetches tx output value given by index
     return queue.pushTask(function getInputValues(resolve, reject) {
         bitcoinRPC.callAsync('getmempoolentry', [txid])
@@ -74,6 +100,63 @@ function getFeeOfTx(txid) {
             });
     });
 }
+
+sock.on('message', async function(topic, message) {
+    try {
+
+        if (topic.toString() === 'rawtx') {
+            var txHex = message.toString('hex');
+            try {
+                var tx = bjs.Transaction.fromHex(txHex);
+            } catch (err) {
+                console.error('initial tx creation from raw hex failed!')
+                console.error(err);
+            }
+
+            if (tx.isCoinbase()) {
+                //this is a coinbase tx, no input = no fees
+                return;
+            }
+            var txid = tx.getId();
+
+            var fee = await getFeeOfTx(txid);
+            let totalSent = 0;
+            tx.outs.forEach(function(out) {
+                totalSent += out.value;
+            })
+            totalSent = (totalSent / 100000000).toFixed(8); //we convert satoshi to BTC
+            var data = {
+                txid: tx.getId(),
+                totalSent: totalSent,
+                byteLength: tx.byteLength(),
+                hasWitnesses: tx.hasWitnesses(),
+                weight: tx.weight(),
+                fee: fee
+            }
+            console.log('socket.io message = ', data);
+            io.emit(topic.toString(), data);
+            return;
+        }
+        io.emit(topic.toString(), { data: message.toString('hex') });
+
+        const events = [
+            'hashtx',
+            'hashblock',
+            //'rawtx'
+        ];
+        var event = events.find(e => { return topic.toString() === e });
+        if (event) {
+            g_G.log('socket.io recv topic=', topic.toString(), ' msg=', message.toString('hex'));
+        }
+
+    } catch (err) {
+        g_G.error('There was an error during getmempoolentry RPC');
+        g_G.error('error is: ' + err);
+
+    }
+});
+
+/*
 
 sock.on('message', function(topic, message) {
     var events = [
@@ -126,3 +209,8 @@ sock.on('message', function(topic, message) {
 
     //console.log('received a message related to:', topic.toString(), 'containing message:', message.toString('hex'));
 });
+
+*/
+
+
+g_G.SERVER_IS_MAINTENANCE = 'RUN';

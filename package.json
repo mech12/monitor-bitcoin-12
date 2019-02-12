@@ -8,7 +8,7 @@
     "watch": "watchify js/app.js --poll=1000 -o static/bundle.js -vvv",
     "build": "browserify js/app.js | uglifyjs -mc warnings=false > static/bundle.js",
     "check-updates": "./node_modules/npm-check-updates/bin/npm-check-updates",
-    "start": "nodemon --watch server.js",
+    "start": "nodemon server.js",
     "start2": "nodemon --watch server.js --watch js/api 2> npm_start.error| tee -a npm_start.log"
   },
   "repository": {

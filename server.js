@@ -22,6 +22,7 @@ var Queue = require('simple-promise-queue');
 Queue.setPromise(require('bluebird'));
 var request = require('request-promise');
 var bitcoinRPC = require("node-bitcoin-rpc");
+const bitcoinCore = require('bitcoin-core');
 
 var queue = new Queue({
     autoStart: true,
@@ -88,12 +89,28 @@ bitcoinRPC.init(config.get('RPC.host'),
     config.get('RPC.rpc_username'),
     process.env.OLLE_RPC_PASS);
 
+g_G.bitcoinClient = new bitcoinCore({
+    host: 'localhost',
+    //host: 'test-olle',
+    port: 9112,
+    username: 'bitcoinrpc',
+    password: process.env.OLLE_RPC_PASS,
+    //headers: true ,
+    //작동안함 wallet : '/Users/roy/wallet.dat',
+});
+
+
 async function getFeeOfTx(txid) {
     //returns a promise and fetches tx output value given by index
     return queue.pushTask(function getInputValues(resolve, reject) {
         bitcoinRPC.callAsync('getmempoolentry', [txid])
             .then(function(res) {
-                resolve(res.result.fee * 100000000);
+                if(res.result)
+                    resolve(res.result.fee * 100000000);
+                else{
+                    g_G.error(res);
+                    reject('res.result==null');
+                }
             })
             .catch(function(err) {
                 reject(err);
@@ -150,9 +167,7 @@ sock.on('message', async function(topic, message) {
         }
 
     } catch (err) {
-        g_G.error('There was an error during getmempoolentry RPC');
-        g_G.error('error is: ' + err);
-
+        g_G.error('There was an error during getmempoolentry RPC' , err);
     }
 });
 

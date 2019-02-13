@@ -19,11 +19,12 @@
       <a class="navbar-brand" href="#" ng-cloak>{{pageName}} <span ng-show="test" class="label label-danger" ng-cloak>Testnet</span><span ng-show="main" class="label label-success" ng-cloak>Mainnet</span><span ng-show="regtest" class="label label-info" ng-cloak>Regtest</span></a>
     </div>
     <ul class="nav navbar-nav">
+      <li ui-sref-active="active"><a ui-sref="ollefinder">Olle Data</a></li>
       <li ui-sref-active="active"><a ui-sref="overview">Overview</a></li>
       <li ui-sref-active="active"><a ui-sref="mempool">Mempool</a></li>
+      <li ui-sref-active="active"><a ui-sref="txexplorer">Transaction</a></li>
       <li ui-sref-active="active"><a ui-sref="blockexplorer">Block Status</a></li>
-      <li ui-sref-active="active"><a ui-sref="txexplorer">FindTransaction</a></li>
-      <li ui-sref-active="active"><a ui-sref="blockfinder">FindBlock</a></li>
+      <li ui-sref-active="active"><a ui-sref="blockfinder">Block</a></li>
       <li ui-sref-active="about"><a ui-sref="about">About</a></li>
     </ul>
   </div>

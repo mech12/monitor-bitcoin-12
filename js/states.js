@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/overview");
+    $urlRouterProvider.otherwise("/ollefinder");
 
     $stateProvider
         .state("overview", {
@@ -14,6 +14,11 @@ module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvide
             url: "/mempool",
             templateUrl: "/templates/mempool.html",
             controller: require("./controllers/mempoolCtrl")
+        })
+        .state("ollefinder", {
+            url: "/ollefinder",
+            templateUrl: "/templates/ollefinder.html",
+            controller: require("./controllers/ollefinderCtrl")
         })
         .state("blockexplorer", {
             url: "/blockexplorer",

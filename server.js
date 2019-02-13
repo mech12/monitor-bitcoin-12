@@ -39,9 +39,9 @@ global.g_G = require('../api/mech12/g_G').Init({
     rootDir: rootDir,
 });
 
-g_G.backend_server_init((ret, CB) => {
-    g_G.load_modules(rootDir + '/../api/db/', 'db_');
-});
+// g_G.backend_server_init((ret, CB) => {
+//     g_G.load_modules(rootDir + '/../api/db/', 'db_');
+// });
 app.use(function(req, res, next) {
     req.__startTime = new Date();
     next() // otherwise continue
@@ -61,8 +61,8 @@ console.log("server is now running on port " + config.get('Web.port'));
 app.use('/api/', api);
 app.use('/', express.static(__dirname + '/static'));
 
-const matador = require('bull-ui/app')(g_G.ENV.queue_endpoint);
-require('./routes')(app, matador);
+// const matador = require('bull-ui/app')(g_G.ENV.queue_endpoint);
+// require('./routes')(app, matador);
 
 if (process.env.NODE_ENV !== 'production') {
     process.once('uncaughtException', function(err) {
@@ -118,60 +118,59 @@ async function getFeeOfTx(txid) {
     });
 }
 
-sock.on('message', async function(topic, message) {
-    try {
+// sock.on('message', async function(topic, message) {
+//     try {
 
-        if (topic.toString() === 'rawtx') {
-            var txHex = message.toString('hex');
-            try {
-                var tx = bjs.Transaction.fromHex(txHex);
-            } catch (err) {
-                console.error('initial tx creation from raw hex failed!')
-                console.error(err);
-            }
+//         if (topic.toString() === 'rawtx') {
+//             var txHex = message.toString('hex');
+//             try {
+//                 var tx = bjs.Transaction.fromHex(txHex);
+//             } catch (err) {
+//                 console.error('initial tx creation from raw hex failed!')
+//                 console.error(err);
+//             }
 
-            if (tx.isCoinbase()) {
-                //this is a coinbase tx, no input = no fees
-                return;
-            }
-            var txid = tx.getId();
+//             if (tx.isCoinbase()) {
+//                 //this is a coinbase tx, no input = no fees
+//                 return;
+//             }
+//             var txid = tx.getId();
 
-            var fee = await getFeeOfTx(txid);
-            let totalSent = 0;
-            tx.outs.forEach(function(out) {
-                totalSent += out.value;
-            })
-            totalSent = (totalSent / 100000000).toFixed(8); //we convert satoshi to BTC
-            var data = {
-                txid: tx.getId(),
-                totalSent: totalSent,
-                byteLength: tx.byteLength(),
-                hasWitnesses: tx.hasWitnesses(),
-                weight: tx.weight(),
-                fee: fee
-            }
-            console.log('socket.io message = ', data);
-            io.emit(topic.toString(), data);
-            return;
-        }
-        io.emit(topic.toString(), { data: message.toString('hex') });
+//             var fee = await getFeeOfTx(txid);
+//             let totalSent = 0;
+//             tx.outs.forEach(function(out) {
+//                 totalSent += out.value;
+//             })
+//             totalSent = (totalSent / 100000000).toFixed(8); //we convert satoshi to BTC
+//             var data = {
+//                 txid: tx.getId(),
+//                 totalSent: totalSent,
+//                 byteLength: tx.byteLength(),
+//                 hasWitnesses: tx.hasWitnesses(),
+//                 weight: tx.weight(),
+//                 fee: fee
+//             }
+//             console.log('socket.io message = ', data);
+//             io.emit(topic.toString(), data);
+//             return;
+//         }
+//         io.emit(topic.toString(), { data: message.toString('hex') });
 
-        const events = [
-            'hashtx',
-            'hashblock',
-            //'rawtx'
-        ];
-        var event = events.find(e => { return topic.toString() === e });
-        if (event) {
-            g_G.log('socket.io recv topic=', topic.toString(), ' msg=', message.toString('hex'));
-        }
+//         const events = [
+//             'hashtx',
+//             'hashblock',
+//             //'rawtx'
+//         ];
+//         var event = events.find(e => { return topic.toString() === e });
+//         if (event) {
+//             g_G.log('socket.io recv topic=', topic.toString(), ' msg=', message.toString('hex'));
+//         }
 
-    } catch (err) {
-        g_G.error('There was an error during getmempoolentry RPC' , err);
-    }
-});
+//     } catch (err) {
+//         g_G.error('There was an error during getmempoolentry RPC' , err);
+//     }
+// });
 
-/*
 
 sock.on('message', function(topic, message) {
     var events = [
@@ -225,7 +224,6 @@ sock.on('message', function(topic, message) {
     //console.log('received a message related to:', topic.toString(), 'containing message:', message.toString('hex'));
 });
 
-*/
 
 
 g_G.SERVER_IS_MAINTENANCE = 'RUN';

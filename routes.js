@@ -56,6 +56,7 @@ module.exports = function(app, matador) {
 
     var cmd_dir = [
         g_G.rootDir  + '/eCmd',
+        g_G.rootDir  + '/../api/api/eCmd/eOLLE',
     ];
 
     g_G.load_eCmd(app, cmd_dir,'/api/v1/');

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiUrlStart) {
-    $scope.txid = 'c0882992e10d414a8fa998931cb0178d0f9cf8fadc18beac5f6e7d262900ccaa';
+    $scope.txid = 'e824060f0fc79f5bb26aeac58f11b694dfdf92d9d676671016f7a44ef1bfd412';
     $scope.record = 'all';
     $scope.transaction = null;
     $scope.eOLLE_READ_LOT = function(txid, record) {
@@ -14,3 +14,5 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             });
     }
 }];
+
+

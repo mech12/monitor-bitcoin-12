@@ -65,7 +65,7 @@ router.get('/eOLLE_READ_LOT', function(req, res) {
     const _id = req.query._id;
     var url = `http://localhost:10001/api/v3/eOLLE_READ_LOT?txid=${txid}&_id=${_id}`;
 
-    g_G.log('eOLLE_READ_LOT = ' + url);
+    //g_G.log('eOLLE_READ_LOT = ' + url);
 
     request.get({ url: url, json: true },
         function(err, resp, body) {

@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
 var api = require("./js/api");
 var cluster = require("cluster");
 var zmq = require("zeromq")
-var sock = zmq.socket("sub");
+var sock_zmq = zmq.socket("sub");
 var os = require("os");
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
@@ -74,13 +74,13 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-sock.connect(config.get('Zmq.socket'));
+sock_zmq.connect(config.get('Zmq.socket'));
 config.get('Zmq.events').forEach(function(event) {
-    sock.subscribe(event);
+    sock_zmq.subscribe(event);
 });
 
 io.on('connection', function(data) {
-    //console.log("data is: " + data) ;
+    console.log("io.on (connection)");
     //console.log(data);
 });
 
@@ -100,17 +100,16 @@ g_G.bitcoinClient = new bitcoinCore({
 });
 
 
-async function getFeeOfTx(txid) {
+function getFeeOfTx(txid) {
     //returns a promise and fetches tx output value given by index
     return queue.pushTask(function getInputValues(resolve, reject) {
         bitcoinRPC.callAsync('getmempoolentry', [txid])
             .then(function(res) {
-                if(res.result)
-                    resolve(res.result.fee * 100000000);
-                else{
-                    g_G.error(res);
-                    reject('res.result==null');
+                if (res.result == null) {
+                    console.error('res.result==null ', res.error.message);
+                    return resolve('unkown');
                 }
+                resolve(res.result.fee * 100000000);
             })
             .catch(function(err) {
                 reject(err);
@@ -118,66 +117,14 @@ async function getFeeOfTx(txid) {
     });
 }
 
-// sock.on('message', async function(topic, message) {
-//     try {
-
-//         if (topic.toString() === 'rawtx') {
-//             var txHex = message.toString('hex');
-//             try {
-//                 var tx = bjs.Transaction.fromHex(txHex);
-//             } catch (err) {
-//                 console.error('initial tx creation from raw hex failed!')
-//                 console.error(err);
-//             }
-
-//             if (tx.isCoinbase()) {
-//                 //this is a coinbase tx, no input = no fees
-//                 return;
-//             }
-//             var txid = tx.getId();
-
-//             var fee = await getFeeOfTx(txid);
-//             let totalSent = 0;
-//             tx.outs.forEach(function(out) {
-//                 totalSent += out.value;
-//             })
-//             totalSent = (totalSent / 100000000).toFixed(8); //we convert satoshi to BTC
-//             var data = {
-//                 txid: tx.getId(),
-//                 totalSent: totalSent,
-//                 byteLength: tx.byteLength(),
-//                 hasWitnesses: tx.hasWitnesses(),
-//                 weight: tx.weight(),
-//                 fee: fee
-//             }
-//             console.log('socket.io message = ', data);
-//             io.emit(topic.toString(), data);
-//             return;
-//         }
-//         io.emit(topic.toString(), { data: message.toString('hex') });
-
-//         const events = [
-//             'hashtx',
-//             'hashblock',
-//             //'rawtx'
-//         ];
-//         var event = events.find(e => { return topic.toString() === e });
-//         if (event) {
-//             g_G.log('socket.io recv topic=', topic.toString(), ' msg=', message.toString('hex'));
-//         }
-
-//     } catch (err) {
-//         g_G.error('There was an error during getmempoolentry RPC' , err);
-//     }
-// });
-
-
-sock.on('message', function(topic, message) {
+sock_zmq.on('message', function(topic, message) {
     var events = [
         'hashtx',
         'hashblock',
         'rawtx'
     ];
+
+    g_G.clog('sock_zmq', 'topic = ', topic.toString());//, ' message= ', message);
     events.forEach(function(event) {
         if (topic.toString() === event) {
             if (event === 'rawtx') {
@@ -196,21 +143,11 @@ sock.on('message', function(topic, message) {
 
                 getFeeOfTx(txid)
                     .then(function(fee) {
-                        let totalSent = 0;
-                        tx.outs.forEach(function(out) {
-                            totalSent += out.value;
-                        })
-                        totalSent = (totalSent / 100000000).toFixed(8); //we convert satoshi to BTC
-                        var data = {
-                            txid: tx.getId(),
-                            totalSent: totalSent,
-                            byteLength: tx.byteLength(),
-                            hasWitnesses: tx.hasWitnesses(),
-                            weight: tx.weight(),
+                        io.emit(topic.toString(), {
+                            data: txHex,
                             fee: fee
-                        }
-                        console.log('data = ', data);
-                        io.emit(topic.toString(), data);
+                        });
+                        console.log('fee is ' + fee + ' for txid: ' + txid);
                     })
                     .catch(function(err) {
                         console.error('There was an error during getmempoolentry RPC');
@@ -223,7 +160,6 @@ sock.on('message', function(topic, message) {
 
     //console.log('received a message related to:', topic.toString(), 'containing message:', message.toString('hex'));
 });
-
 
 
 g_G.SERVER_IS_MAINTENANCE = 'RUN';

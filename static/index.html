@@ -4,13 +4,14 @@
 <head>
     <title>Olle Nature Point Network Monitor</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT" crossorigin="anonymous">
-    <link href="styles/style.css" rel="stylesheet" type="text/css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/AdminLTE.min.css">
     <link rel="stylesheet" href="lte/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="lte/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body ng-app="raspinodemon" class="hold-transition skin-blue sidebar-mini">
@@ -35,16 +37,16 @@
         <header class="main-header">
             <!-- Logo -->
             <a href="#" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>O</b>lle</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Olle</b>Chain</span>
-        </a>
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>O</b>lle</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Olle</b>Chain</span>
+            </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                  <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">Toggle navigation</span>
                 </a>
             </nav>
         </header>
@@ -84,6 +86,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.16.0/moment.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="lte/plugins/morris/morris.min.js"></script>
         <!-- Sparkline -->
         <script src="lte/plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -103,10 +106,15 @@
         <script src="lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
         <script src="lte/plugins/fastclick/fastclick.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+        <!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    -->
         <!-- AdminLTE App -->
         <script src="lte/dist/js/app.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="lte/dist/js/demo.js"></script>
+        <script src="g_G.js"></script>
         <script src="bundle.js"></script>
     </div>
 </body>

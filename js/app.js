@@ -7,7 +7,8 @@ var socketio = require("angular-socket-io");
 
 var app = angular.module(config.get('Client.appName'),
   [ 'ui.router',
-    'btford.socket-io'
+    'btford.socket-io',
+
   ]
 );
 

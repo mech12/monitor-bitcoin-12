@@ -19,3 +19,12 @@ require("./services");
 
 app.config(require("./states"));
 app.constant('apiUrlStart', config.get('Client.apiUrlStart'));
+
+
+
+app.controller('monitorCtrl', ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiUrlStart) {
+	g_G = window.g_G;
+	$scope.g_G = g_G;
+
+
+}]);

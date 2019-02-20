@@ -2,7 +2,29 @@ if (window.g_G == null) window.g_G = {
     olle_api_url: 'http://localhost:10001'
 };
 
+
 g_G = window.g_G;
+
+g_G.error = console.error;
+g_G.log = console.log;
+g_G.warn = console.warn;
+
+//  https://github.com/CodeSeven/toastr
+g_G.toastr = toastr;
+/*
+// Display a warning toast, with no title
+toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
+
+// Display a success toast, with a title
+toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+
+// Display an error toast, with a title
+toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
+
+// Override global options
+toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeOut: 5000})
+*/
+
 g_G.isMobile = function() {
     var md = new MobileDetect(window.navigator.userAgent);
     return md.mobile();
@@ -15,11 +37,35 @@ g_G.isMobile = function() {
     }
 }
 
+g_G.checkString = function(val, key, max, min) {
+    if (min == null) min = 0;
+    var v = val[key];
+    if (v == null) {
+        g_G.toastr.error(key + ' : 값이 없습니다.');
+        g_G.error('checkString() : ' + key + '==null');
+        return true;
+    }
+    if (v.length < min) {
+        g_G.toastr.error(key + ' : 최소길이는 ' + min + ' 입니다.');
+        g_G.error('checkString() : ' + key + 'length <=min ' + min);
+        return true;
+    }
+    if (max) {
+        if (v.length > max) {
+            g_G.toastr.error(key + ' : 최대길이는 ' + max + ' 입니다.');
+            g_G.error('checkString() : ' + key + 'length >max ' + max);
+            return true;
+        }
+    }
+    return false;
+}
+
+
 g_G.queryString = function() {
-    var vars = {}, hash;
+    var vars = {},
+        hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
+    for (var i = 0; i < hashes.length; i++) {
         hash = hashes[i].split('=');
         vars[hash[0]] = hash[1];
     }

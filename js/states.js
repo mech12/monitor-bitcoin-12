@@ -35,6 +35,16 @@ module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvide
             templateUrl: "/templates/blockfinder.html",
             controller: require("./controllers/blockfinderCtrl")
         })
+        .state("login", {
+            url: "/login",
+            templateUrl: "/templates/login.html",
+            controller: require("./controllers/loginCtrl")
+        })
+        .state("regist", {
+            url: "/regist",
+            templateUrl: "/templates/regist.html",
+            controller: require("./controllers/registCtrl")
+        })
         .state("about", {
             url: "/about",
             templateUrl: "/templates/about.html" //,

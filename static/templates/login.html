@@ -1,0 +1,56 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html"><b>Olle</b>Chain Admin</a>
+    </div><!-- /.login-logo -->
+    <div class="login-box-body" ng-if="g_G.user==null">
+        <p class="login-box-msg">Sign in to start Olle Nature Admin</p>
+        <form>
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" placeholder="Email" ng-model="rq.email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="Password" ng-model="rq.password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck" ng-if="0">
+                        <label>
+                            <input type="checkbox"> Remember Me
+                        </label>
+                    </div>
+                </div><!-- /.col -->
+                <div class="col-xs-12">
+                    <button ng-click="send_eUSER_LOGIN()" type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div><!-- /.col -->
+            </div>
+        </form>
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+        </div><!-- /.social-auth-links -->
+        <a ng-click="clearCookie()">Clear Cookie</a><br>
+        <a href="#">I forgot my password</a><br>
+        <a href="#!/regist" class="text-center">Register a new membership</a>
+    </div><!-- /.login-box-body -->
+    <div class="login-box-body" ng-if="g_G.user">
+        <p class="login-box-msg">{{g_G.user.role}} : {{g_G.user.email}} </p>
+        <form>
+            <div class="col-xs-12 text-center" >
+                <button ng-click="send_eUSER_LOGOUT()" type="submit" class="btn btn-primary btn-block btn-flat">Log out</button>
+            </div><!-- /.col -->
+        </form>
+        <div class="social-auth-links text-center">
+            <p>...</p>
+        </div><!-- /.social-auth-links -->
+    </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
+<script>
+$(function() {
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+    });
+});
+</script>

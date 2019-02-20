@@ -5,14 +5,14 @@
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li ><a href="#tab_1" data-toggle="tab">By TXID</a></li>
-                <li class="active"><a href="#tab_2" data-toggle="tab">By Category</a></li>
+                <li id="tab_txid_header"><a href="#tab_txid" data-toggle="tab">By TXID</a></li>
+                <li id="tab_category_header" class="active"> <a href="#tab_category" data-toggle="tab">By Category</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane " id="tab_1">
+                <div class="tab-pane " id="tab_txid">
                     <div ng-include="'/templates/ollefinder_txid.html'" ></div>
                 </div><!-- /.tab-pane -->
-                <div class="tab-pane active" id="tab_2">
+                <div class="tab-pane active" id="tab_category">
                     <div ng-include="'/templates/ollefinder_date.html'" ></div>
                 </div><!-- /.tab-pane -->
             </div><!-- /.tab-content -->

@@ -1,4 +1,3 @@
-
 if (window.g_G == null) window.g_G = {
     olle_api_url: 'http://localhost:10001'
 };
@@ -16,7 +15,19 @@ g_G.isMobile = function() {
     }
 }
 
-window.g_G.ollefinderData = {
+g_G.queryString = function() {
+    var vars = {}, hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+
+window.g_G.olle_finderData = {
     category_table: {
         "1. 기초상품등록": "olleBasicProduct",
         "2. 구매현황": "olleBuy",
@@ -92,4 +103,3 @@ window.g_G.ollefinderData = {
         // ],
     }
 }
-

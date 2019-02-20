@@ -3,17 +3,17 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="txid">TX id:</label>
-                <input type="text" ng-model="g_G.ollefinderData.txid" class="form-control" id="txid">
+                <input type="text" ng-model="g_G.olle_finderData.txid" class="form-control" id="txid">
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="Record">Record id ( or all ):</label>
-                <input type="text" ng-model="g_G.ollefinderData.record" class="form-control" id="record" value="default">
+                <input type="text" ng-model="g_G.olle_finderData.record" class="form-control" id="record" value="default">
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-default" ng-click="eOLLE_READ_LOT(g_G.ollefinderData.txid,g_G.ollefinderData.record)">조회</button>
+    <button type="submit" class="btn btn-default" ng-click="eOLLE_READ_LOT(g_G.olle_finderData.txid,g_G.olle_finderData.record)">조회</button>
 </form>
 <loading></loading>
 <hr>
@@ -22,11 +22,11 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <i class="fa fa-th-list"></i>
-                <h3 class="box-title">올레 {{getOlleDataType(g_G.ollefinderData.eOLLE_READ_LOT)}} 정보</h3>
+                <h3 class="box-title">올레 정보 <{{getOlleDataType(g_G.olle_finderData.eOLLE_READ_LOT)}}></h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-                <dl class="dl-horizontal" ng-if="g_G.ollefinderData.eOLLE_READ_LOT_olle">
-                    <div ng-repeat="row in g_G.ollefinderData.eOLLE_READ_LOT_olle">
+                <dl class="dl-horizontal" ng-if="g_G.olle_finderData.eOLLE_READ_LOT_olle">
+                    <div ng-repeat="row in g_G.olle_finderData.eOLLE_READ_LOT_olle">
                         <dt>{{row.key}}</dt>
                         <dd>{{row.value}}</dd>
                     </div>

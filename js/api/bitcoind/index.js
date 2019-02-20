@@ -27,7 +27,7 @@ router.get("/status", function(req, res) {
         networkInterfaces: os.networkInterfaces(),
         loadavg: os.loadavg()
     };
-    getSize(config.get('Bitcoin.homeDir'), function(error, size) {
+    getSize(process.env.OLLE_BITCOIN_HOME, function(error, size) {
         if (!error) {
             info.blockchainSize = size;
             res.status(200).json(info).end();

@@ -9,7 +9,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="reservation" ng-model="g_G.ollefinderData.searchDate">
+                    <input type="text" class="form-control pull-right" id="reservation" ng-model="g_G.olle_finderData.searchDate">
                 </div><!-- /.input group -->
             </div>
         </div><!-- /.form group -->
@@ -19,8 +19,8 @@
                     <label>카테고리 :</label>
                 </div>
                 <div style="display: inline-block">
-                    <select ng-model="g_G.ollefinderData.categoryCurr">
-                        <option ng-repeat="val in g_G.ollefinderData.EOlleDataType">{{val}}</option>
+                    <select ng-model="g_G.olle_finderData.categoryCurr">
+                        <option ng-repeat="val in g_G.olle_finderData.EOlleDataType">{{val}}</option>
                     </select>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <label>검색옵션 :</label>
                 </div>
                 <div style="display: inline-block">
-                    <select ng-model="g_G.ollefinderData.searchOption1" ng-change="update_searchOption1()">
+                    <select ng-model="g_G.olle_finderData.searchOption1" ng-change="update_searchOption1()">
                         <option selected="">--------</option>
                         <option ng-repeat="val in getCategoryByEOlleDataType()">{{val}}</option>
                     </select>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-md-4">
             <div class="input-group">
-                <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.ollefinderData.searchString">
+                <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.olle_finderData.searchString">
                 <span class="input-group-btn">
                     <button class="btn btn-danger" type="button" ng-click="eOLLE_FIND()">Go!</button>
                 </span>
@@ -46,8 +46,8 @@
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
-        <div ng-if="g_G.ollefinderData.eOLLE_FIND==null">data not found</div>
-        <table ng-if="g_G.ollefinderData.eOLLE_FIND" id="olleDataTable" class="table table-bordered table-striped table-hover">
+        <div ng-if="g_G.olle_finderData.eOLLE_FIND==null">data not found</div>
+        <table ng-if="g_G.olle_finderData.eOLLE_FIND" id="olleDataTable" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>record id</th>
@@ -56,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="d in g_G.ollefinderData.eOLLE_FIND" ng-init=" $last && updated_eOLLE_FIND()" ng-click="click_olleDataTable(d)">
+                <tr ng-repeat="d in g_G.olle_finderData.eOLLE_FIND" ng-init=" $last && updated_eOLLE_FIND()" ng-click="click_olleDataTable(d)">
                     <td ng-if="d.txid"><span class="label label-success">{{d._id}}</span></td>
                     <td ng-if="d.txid==null"><span class="label label-warning">{{d._id}}</span></td>
                     <td>{{date2string(d.createdAt)}}</td>
@@ -79,7 +79,7 @@
         <h3 class="box-title">JSON Data</h3>
     </div><!-- /.box-header -->
     <div class="box-body">
-        <pre>{{g_G.ollefinderData.json_data_eOLLE_FIND | json}}</pre>
+        <pre>{{g_G.olle_finderData.json_data_eOLLE_FIND | json}}</pre>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
 <script>

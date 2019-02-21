@@ -1,0 +1,11 @@
+{
+    "ignore": [
+        "test/*",
+        "static/*"
+    ],
+    "events":
+    {
+        "111restart": "npm run buildAndRun"
+    }
+
+}

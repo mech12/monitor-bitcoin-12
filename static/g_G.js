@@ -149,3 +149,11 @@ window.g_G.olle_finderData = {
         // ],
     }
 }
+
+
+var ret = Cookies.getJSON('eUSER_LOGIN');
+if (ret) {
+    g_G.isLogin = true;
+    g_G.user = ret.user;
+    console.log('eUSER_LOGIN=', ret);
+}

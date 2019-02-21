@@ -1,3 +1,4 @@
+
 'use strict';
 
 module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
@@ -35,6 +36,11 @@ module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvide
             templateUrl: "/templates/blockfinder.html",
             controller: require("./controllers/blockfinderCtrl")
         })
+        .state("ollewrite", {
+            url: "/ollewrite",
+            templateUrl: "/templates/ollewrite.html",
+            controller: require("./controllers/ollewriteCtrl")
+        })
         .state("login", {
             url: "/login",
             templateUrl: "/templates/login.html",
@@ -51,3 +57,4 @@ module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvide
             //controller: require("./controllers/about")
         });
 }];
+

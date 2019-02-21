@@ -31,10 +31,12 @@ var queue = new Queue({
 
 const rootDir = path.normalize(__dirname);
 //console.log('config.rootDir=' , rootDir , '__dirname=',__dirname);
-global.g_G = require('../api/mech12/g_G').Init({
+global.g_G = require('./mech12/g_G').Init({
     globalVar: rootDir + '/setting_global',
-    loadingPath: rootDir + '/../api/util/',
-    //loadingPattern: 'util_',
+    
+    loadingPath: rootDir + '/util/',
+    loadingPattern: 'util_',
+
     //settingFilePath: rootDir + '/../api/', // setting_<SERVICE_MODE>.js file path 
     rootDir: rootDir,
 });

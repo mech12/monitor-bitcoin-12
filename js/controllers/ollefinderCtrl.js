@@ -1,5 +1,6 @@
 // 'use strict';
 
+
 g_G.olle_finderData.searchDate = null;
 g_G.olle_finderData.searchString = null;
 g_G.olle_finderData.EOlleDataType = [];
@@ -114,8 +115,9 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
         g_G.olle_finderData.json_data_eOLLE_FIND = d;
     }
     $scope.date2string = function(d) {
-        var str = d.split('.')[0];
-        return str.substring(0, str.length - 3);
+        return d;
+        // var str = d.split('.')[0];
+        // return str.substring(0, str.length - 3);
     }
 
     $scope.updated_eOLLE_FIND = function() {

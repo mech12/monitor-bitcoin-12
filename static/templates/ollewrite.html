@@ -1,0 +1,25 @@
+<h3 class="text-center">올레네이처 생산정보 등록</h3>
+<!-- START CUSTOM TABS -->
+<div class="box box-warning">
+    <div class="box-header with-border">
+        <h3 class="box-title">카테고리를 선택하고 엑셀데이타를 복사해 넣으시오</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <form role="form">
+            <!-- select -->
+            <div class="form-group">
+                <label>카테고리</label>
+                <select ng-model="rq.category">
+                    <option ng-repeat="val in g_G.olle_finderData.EOlleDataType">{{val}}</option>
+                </select>
+            </div> <!-- text input -->
+            <div class="form-group">
+                <label>등록할 데이타</label>
+                <textarea  ng-model="rq.csv" class="form-control" rows="15" placeholder="Enter Excel data..."></textarea>
+                <span class="input-group-btn">
+                    <button ng-click="send_eOLLE_WRITE_MULTY()" type="submit" class="btn btn-primary">Submit</button>
+                </span>
+            </div>
+        </form>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->

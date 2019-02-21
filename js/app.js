@@ -4,9 +4,9 @@ require("angular");
 require("@uirouter/angularjs");
 var config = require("config");
 var socketio = require("angular-socket-io");
-window.g_G.olle_api_url = process.env.OLLE_API_URL;
 
-console.log('window.g_G.olle_api_url = ',window.g_G.olle_api_url);
+window.g_G.olle_api_url = process.env.OLLE_API_URL;
+console.log('window.g_G.olle_api_url = ',process.env.OLLE_API_URL);
 
 
 var app = angular.module(config.get('Client.appName'),

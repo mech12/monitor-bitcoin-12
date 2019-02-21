@@ -17,10 +17,10 @@ echo "current SERVICE_MODE is $SERVICE_MODE"
 if [ $SERVICE_MODE = live ]
 then
 	source ../env/12ships.live.env
-    git checkout master
+    #git checkout master
 else
 	source ../env/12ships.test.env
-    git checkout test
+    #git checkout test
 fi
 
 git reset --hard && git pull

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "find ./tests -name '*.js' | xargs -n 1 ./node_modules/mocha/bin/mocha -R spec",
     "watch": "watchify js/app.js --poll=1000 -o static/bundle.js -vvv",
-    "build": "browserify js/app.js | uglifyjs -mc warnings=false > static/bundle.js",
+    "build": "browserify js/app.js -t envify | uglifyjs -mc warnings=false > static/bundle.js",
     "check-updates": "./node_modules/npm-check-updates/bin/npm-check-updates",
     "start": "nodemon server.js",
     "buildAndRun": "npm run build && npm start",
@@ -52,6 +52,7 @@
     "compression": "^1.7.3",
     "config": "^1.31.0",
     "csvtojson": "^2.0.8",
+    "envify": "^4.1.0",
     "express": "^4.16.3",
     "forever": "^0.15.3",
     "js-yaml": "^3.12.0",

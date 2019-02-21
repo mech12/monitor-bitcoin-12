@@ -1,6 +1,5 @@
 if (window.g_G == null) window.g_G = {
-    //olle_api_url: 'http://localhost:10001'
-    olle_api_url: process.env.OLLE_API_URL
+    olle_api_url: 'http://localhost:10001'
 };
 
 

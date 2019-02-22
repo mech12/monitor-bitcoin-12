@@ -1,5 +1,6 @@
 'use strict';
 
+const cors = require('cors');
 var config = require("config");
 var express = require("express");
 var app = express();
@@ -50,6 +51,9 @@ app.use(function(req, res, next) {
 })
 
 app.get('/health', function(req, res) { res.sendStatus(200); })
+
+app.use(cors());
+/*
 app.all('/*', function(req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -77,7 +81,7 @@ app.use(function(req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-
+*/
 
 server.listen(config.get('Web.port'));
 app.use(compression());

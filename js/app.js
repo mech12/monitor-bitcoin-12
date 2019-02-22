@@ -5,8 +5,12 @@ require("@uirouter/angularjs");
 var config = require("config");
 var socketio = require("angular-socket-io");
 
-window.g_G.olle_api_url = process.env.OLLE_API_URL;
-console.log('window.g_G.olle_api_url = ',process.env.OLLE_API_URL);
+if (process.env.OLLE_API_URL) {
+    window.g_G.olle_api_url = process.env.OLLE_API_URL;
+    console.log('changed window.g_G.olle_api_url = ', window.g_G.olle_api_url);
+}
+else
+	console.log('window.g_G.olle_api_url = ', window.g_G.olle_api_url);
 
 
 var app = angular.module(config.get('Client.appName'),
@@ -32,4 +36,3 @@ app.controller('monitorCtrl', ['$http', '$scope', 'apiUrlStart', function($http,
 
 
 }]);
-

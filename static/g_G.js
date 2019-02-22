@@ -1,5 +1,6 @@
 if (window.g_G == null) window.g_G = {
-    olle_api_url: 'http://localhost:10001'
+    //olle_api_url: 'http://localhost:10001'
+    olle_api_url: 'http://test.olle.hansandopool.com:10001'
 };
 
 

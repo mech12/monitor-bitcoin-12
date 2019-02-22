@@ -5,9 +5,9 @@
 DIRECTORY=$(cd `dirname $0` && pwd)
 cd $DIRECTORY
 
-pushd ../env
+cd ../env
 git reset --hard && git pull
-popd
+cd ../monitor-bitcoin-12
 
 # export GOOGLE_APPLICATION_CREDENTIALS=/home/ec2-user/12ships/env/doc/google_12ships.json
 

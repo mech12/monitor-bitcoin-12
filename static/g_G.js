@@ -8,6 +8,7 @@ g_G = window.g_G;
 
 g_G.error = console.error;
 g_G.log = console.log;
+g_G.clog = console.log;
 g_G.warn = console.warn;
 
 //  https://github.com/CodeSeven/toastr
@@ -157,4 +158,63 @@ if (ret) {
     g_G.isLogin = true;
     g_G.user = ret.user;
     console.log('eUSER_LOGIN=', ret);
+}
+
+
+function getlocale() {
+    var userLang = navigator.language || navigator.userLanguage;
+    userLang = userLang.split('-')[0];
+    //alert("The language is: " + userLang);
+    return userLang;
+}
+
+g_G.error_handler = function(eCmd, rq, rs, err) {
+    //if (g_G.SERVICE_MODE == 'dev') {
+    g_G.toastr.clear();
+
+    g_G.toastr.error(err.message, eCmd);
+    //}
+}
+
+g_G.http_call = function(method, url, data, CB) {
+    data.locale = getlocale();
+    console.log('http', 'g_G.http_get = ', url);
+    //console.dir(data);
+    $.ajax({
+        url: url,
+        type: method,
+        beforeSend: function(xhr) {
+            if (g_G.user) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + g_G.user.token);
+            }
+        },
+        data: data,
+        dataType: 'json',
+        crossDomain: true,
+
+        success: function(ret) {
+            if (ret.error) {
+                g_G.error(url, ret.error);
+                if (CB) CB(ret.error);
+                return;
+            }
+            //g_G.clog('http', 'http_get  success= ', ret);
+            if (ret.user) {
+                g_G.user = ret.user;
+            };
+            //$('#status').css('color', 'black').html(' ok : ' + url);
+            if (CB) CB(null, ret);
+        },
+        error: function(xhr, exception) {
+            var ret = xhr.responseJSON;
+            g_G.error('http_get', url, exception, xhr);
+            //_ajax_error(xhr, exception);
+            if (CB) {
+                if (ret)
+                    CB(ret.error ? ret.error : ret, ret);
+                else
+                    CB(exception.toString());
+            }
+        }
+    });
 }

@@ -161,6 +161,25 @@ if (ret) {
 }
 
 
+
+function _ajax_error(jqXHR, exception) {
+    if (jqXHR.status === 0) {
+        $('#status').css('color', 'red').html(' Not connect. Verify Network.');
+    } else if (jqXHR.status == 404) {
+        $('#status').css('color', 'red').html(' Requested page not found. [404]');
+    } else if (jqXHR.status == 500) {
+        $('#status').css('color', 'red').html(' Internal Server Error [500].');
+    } else if (exception === 'parsererror') {
+        $('#status').css('color', 'red').html(' Requested JSON parse failed.');
+    } else if (exception === 'timeout') {
+        $('#status').css('color', 'red').html(' Time out error.');
+    } else if (exception === 'abort') {
+        $('#status').css('color', 'red').html(' Ajax request aborted.');
+    } else {
+        $('#status').css('color', 'red').html(' Uncaught Error.' + jqXHR.responseText);
+    }
+}
+
 function getlocale() {
     var userLang = navigator.language || navigator.userLanguage;
     userLang = userLang.split('-')[0];

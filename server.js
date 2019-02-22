@@ -50,6 +50,12 @@ app.use(function(req, res, next) {
 })
 
 app.get('/health', function(req, res) { res.sendStatus(200); })
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 app.use(function(req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');

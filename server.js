@@ -23,6 +23,8 @@ Queue.setPromise(require('bluebird'));
 var request = require('request-promise');
 var bitcoinRPC = require("node-bitcoin-rpc");
 const bitcoinCore = require('bitcoin-core');
+const cors = require('cors')
+
 
 var queue = new Queue({
     autoStart: true,
@@ -64,6 +66,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+//allow OPTIONS on all resources
+app.options('*', cors());
 
 server.listen(config.get('Web.port'));
 app.use(compression());
@@ -133,7 +137,7 @@ function getFeeOfTx(txid) {
 }
 
 sock_zmq.on('message', function(topic, message) {
-    
+
     var events = [
         'hashtx',
         'hashblock',

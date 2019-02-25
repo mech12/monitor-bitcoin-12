@@ -46,7 +46,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             return;
         }
 
-        $http.defaults.useXDomain = true;
+        //$http.defaults.useXDomain = true;
         $http.post(g_G.olle_api_url + '/api/v3/eUSER_LOGIN', rq)
             .then(function success(res) {
                 var ret = res.data;

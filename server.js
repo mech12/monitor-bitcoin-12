@@ -133,6 +133,7 @@ function getFeeOfTx(txid) {
 }
 
 sock_zmq.on('message', function(topic, message) {
+    
     var events = [
         'hashtx',
         'hashblock',

@@ -13,10 +13,10 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
     $scope.send_eOLLE_WRITE_MULTY = function() {
         var rq = $scope.rq;
-        if (g_G.checkString(rq, 'category')) return;
+        if (g_G.checkString(rq, 'categoryOrg')) return;
         if (g_G.checkString(rq, 'csv')) return;
 
-        rq.category = g_G.olle_finderData.category_table[rq.categoryOrg];
+        var category = g_G.olle_finderData.category_table[rq.categoryOrg];
 
 
         csvtojson({ delimiter: '\t' })
@@ -26,7 +26,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                 if (jsonObj.length <= 0) return g_G.toastr.error('[jsonObj.length >=1]', "write FAIL");
 
                 console.log('jsonObj = ', jsonObj);
-                send_data({ type: rq.category, data: jsonObj });
+                send_data({ type: category, data: jsonObj });
             });
     }
 

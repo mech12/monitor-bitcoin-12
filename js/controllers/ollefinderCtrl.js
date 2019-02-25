@@ -19,7 +19,7 @@ g_G.olle_finderData.txid = '034b3db2d7423290e5e3bfec67467254f1888d80999a44a24ba1
 g_G.olle_finderData.record = '5c6cd70c8e25478cfc297448';
 
 //     http://localhost:9009/#!/ollefinder?txid=034b3db2d7423290e5e3bfec67467254f1888d80999a44a24ba10e291cee157f&record=5c6cd70c8e25478cfc297448
-// http://test.olle.hansandopool.com:9009/#!/ollefinder?txid=034b3db2d7423290e5e3bfec67467254f1888d80999a44a24ba10e291cee157f&record=5c6cd70c8e25478cfc297448
+// http://test-olle.hansandopool.com:9009/#!/ollefinder?txid=034b3db2d7423290e5e3bfec67467254f1888d80999a44a24ba10e291cee157f&record=5c6cd70c8e25478cfc297448
 module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiUrlStart) {
 
 

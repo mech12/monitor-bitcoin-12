@@ -8,7 +8,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
     var g_G = window.g_G;
     $scope.g_G = g_G;
     $scope.rq = {
-        category: g_G.olle_finderData.EOlleDataType[0],
+        categoryOrg: g_G.olle_finderData.EOlleDataType[0],
     };
 
     $scope.send_eOLLE_WRITE_MULTY = function() {
@@ -16,7 +16,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
         if (g_G.checkString(rq, 'category')) return;
         if (g_G.checkString(rq, 'csv')) return;
 
-        rq.category = g_G.olle_finderData.category_table[rq.category];
+        rq.category = g_G.olle_finderData.category_table[rq.categoryOrg];
 
 
         csvtojson({ delimiter: '\t' })

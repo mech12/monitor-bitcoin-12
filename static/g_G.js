@@ -162,24 +162,6 @@ if (ret) {
 
 
 
-function _ajax_error(jqXHR, exception) {
-    if (jqXHR.status === 0) {
-        $('#status').css('color', 'red').html(' Not connect. Verify Network.');
-    } else if (jqXHR.status == 404) {
-        $('#status').css('color', 'red').html(' Requested page not found. [404]');
-    } else if (jqXHR.status == 500) {
-        $('#status').css('color', 'red').html(' Internal Server Error [500].');
-    } else if (exception === 'parsererror') {
-        $('#status').css('color', 'red').html(' Requested JSON parse failed.');
-    } else if (exception === 'timeout') {
-        $('#status').css('color', 'red').html(' Time out error.');
-    } else if (exception === 'abort') {
-        $('#status').css('color', 'red').html(' Ajax request aborted.');
-    } else {
-        $('#status').css('color', 'red').html(' Uncaught Error.' + jqXHR.responseText);
-    }
-}
-
 function getlocale() {
     var userLang = navigator.language || navigator.userLanguage;
     userLang = userLang.split('-')[0];
@@ -187,53 +169,3 @@ function getlocale() {
     return userLang;
 }
 
-g_G.error_handler = function(eCmd, rq, rs, err) {
-    //if (g_G.SERVICE_MODE == 'dev') {
-    g_G.toastr.clear();
-
-    g_G.toastr.error(err.message, eCmd);
-    //}
-}
-
-g_G.http_call = function(method, url, data, CB) {
-    data.locale = getlocale();
-    console.log('http', 'g_G.http_get = ', url);
-    //console.dir(data);
-    $.ajax({
-        url: url,
-        type: method,
-        beforeSend: function(xhr) {
-            if (g_G.user) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + g_G.user.token);
-            }
-        },
-        data: data,
-        dataType: 'json',
-        crossDomain: true,
-
-        success: function(ret) {
-            if (ret.error) {
-                g_G.error(url, ret.error);
-                if (CB) CB(ret.error);
-                return;
-            }
-            //g_G.clog('http', 'http_get  success= ', ret);
-            if (ret.user) {
-                g_G.user = ret.user;
-            };
-            //$('#status').css('color', 'black').html(' ok : ' + url);
-            if (CB) CB(null, ret);
-        },
-        error: function(xhr, exception) {
-            var ret = xhr.responseJSON;
-            g_G.error('http_get', url, exception, xhr);
-            //_ajax_error(xhr, exception);
-            if (CB) {
-                if (ret)
-                    CB(ret.error ? ret.error : ret, ret);
-                else
-                    CB(exception.toString());
-            }
-        }
-    });
-}

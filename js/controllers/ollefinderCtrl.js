@@ -31,7 +31,6 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
     $scope.eOLLE_READ_LOT = function(txid, record) {
         $scope.json_data = {};
-
         $http.get(apiUrlStart + '/eOLLE_READ_LOT?txid=' + txid + '&_id=' + record)
             .then(function success(res) {
                 g_G.olle_finderData.eOLLE_READ_LOT = res.data;
@@ -55,10 +54,10 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
         if (eOLLE_READ_LOT && eOLLE_READ_LOT.result) {
             var o = g_G.olle_finderData.category_table;
             var keys = Object.keys(o);
-            var k = keys.find(function(k) {
-                return o[k] == eOLLE_READ_LOT.result.type;
+            var k= keys.find(function(k){
+                return o[k]==eOLLE_READ_LOT.result.type;
             });
-            if (k) return k;
+            if(k) return k;
             else return eOLLE_READ_LOT.result.type;
         }
     }
@@ -96,22 +95,19 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             end: end,
         }
 
+        $http.post(g_G.olle_api_url + '/api/v3/eOLLE_FIND', query)
+            .then(function success(res) {
+                if (res.error) return console.error(' ', res.error);
 
-        g_G.http_call('post', g_G.olle_api_url + '/api/v3/eOLLE_FIND', query, function(err, res) {
-            if (err) return console.error(' ', err);
-            //console.log('=========== res.ret = ', res.ret);
+                g_G.olle_finderData.eOLLE_FIND = res.data.ret;
+                if (g_G.olle_finderData.eOLLE_FIND.length == 0) g_G.olle_finderData.eOLLE_FIND == null;
 
-            g_G.olle_finderData.eOLLE_FIND = res.ret;
-            if (g_G.olle_finderData.eOLLE_FIND.length == 0) g_G.olle_finderData.eOLLE_FIND == null;
+                if (g_G.olle_finderData.eOLLE_FIND) {
+                    g_G.olle_finderData.eOLLE_FIND_field = field;
+                }
+                //console.log('g_G.olle_finderData.eOLLE_FIND = ', g_G.olle_finderData.eOLLE_FIND);
 
-            if (g_G.olle_finderData.eOLLE_FIND) {
-                g_G.olle_finderData.eOLLE_FIND_field = field;
-            }
-            //console.log('g_G.olle_finderData.eOLLE_FIND = ', g_G.olle_finderData.eOLLE_FIND);
-            $scope.$apply();
-
-        });
-
+            });
     }
 
     $scope.click_olleDataTable = function(d) {

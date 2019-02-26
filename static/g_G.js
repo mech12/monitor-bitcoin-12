@@ -8,7 +8,6 @@ g_G = window.g_G;
 
 g_G.error = console.error;
 g_G.log = console.log;
-g_G.clog = console.log;
 g_G.warn = console.warn;
 
 //  https://github.com/CodeSeven/toastr
@@ -159,13 +158,3 @@ if (ret) {
     g_G.user = ret.user;
     console.log('eUSER_LOGIN=', ret);
 }
-
-
-
-function getlocale() {
-    var userLang = navigator.language || navigator.userLanguage;
-    userLang = userLang.split('-')[0];
-    //alert("The language is: " + userLang);
-    return userLang;
-}
-

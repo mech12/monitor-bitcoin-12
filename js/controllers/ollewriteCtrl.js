@@ -32,7 +32,13 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
     function send_data(rq) {
 
-        g_G.http_call('post', g_G.olle_api_url + '/api/v3/eOLLE_WRITE_MULTY', rq, function(err, rs) {
+        $http.post(g_G.olle_api_url + '/api/v3/eOLLE_WRITE_MULTY', rq)
+            .then(function success(res) {
+                if (res.error) {
+                    g_G.toastr.error('네트웍 에러', "처리 실패.");
+                    return console.error('error 1',res.error);
+                }
+                var rs = res.data;
                 if (rs.error) {
                     g_G.toastr.error('네트웍 에러', "처리 실패.");
                     return console.error('error 2',rs.error);

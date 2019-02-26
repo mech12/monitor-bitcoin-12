@@ -1,6 +1,5 @@
 'use strict';
 
-const cors = require('cors');
 var config = require("config");
 var express = require("express");
 var app = express();
@@ -24,6 +23,8 @@ Queue.setPromise(require('bluebird'));
 var request = require('request-promise');
 var bitcoinRPC = require("node-bitcoin-rpc");
 const bitcoinCore = require('bitcoin-core');
+const cors = require('cors')
+
 
 var queue = new Queue({
     autoStart: true,
@@ -51,23 +52,6 @@ app.use(function(req, res, next) {
 })
 
 app.get('/health', function(req, res) { res.sendStatus(200); })
-
-app.use(cors());
-/*
-app.all('/*', function(req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    // Pass to next layer of middleware
-    next();
-});
-
 app.use(function(req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -81,7 +65,9 @@ app.use(function(req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-*/
+
+//allow OPTIONS on all resources
+app.options('*', cors());
 
 server.listen(config.get('Web.port'));
 app.use(compression());
@@ -151,6 +137,7 @@ function getFeeOfTx(txid) {
 }
 
 sock_zmq.on('message', function(topic, message) {
+
     var events = [
         'hashtx',
         'hashblock',
@@ -196,3 +183,4 @@ sock_zmq.on('message', function(topic, message) {
 
 
 g_G.SERVER_IS_MAINTENANCE = 'RUN';
+

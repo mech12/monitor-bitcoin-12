@@ -46,7 +46,10 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             return;
         }
 
-        g_G.http_call('post', g_G.olle_api_url + '/api/v3/eUSER_LOGIN', rq, function(err, ret) {
+        //$http.defaults.useXDomain = true;
+        $http.post(g_G.olle_api_url + '/api/v3/eUSER_LOGIN', rq)
+            .then(function success(res) {
+                var ret = res.data;
                 delete $scope.isLogging;
                 g_G.log('ret = ', ret);
 
@@ -62,7 +65,6 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                 g_G.isLogin = true;
                 g_G.user = ret.user;
                 //window.location = '/#/ollefinder';
-                $scope.$apply();
 
             });
     }

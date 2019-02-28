@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box" ng-if="isShowJson==false">
     <div class="box-header">
         <div class="col-md-4">
             <div style="display: inline-block">
@@ -73,17 +73,31 @@
         </table>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
-<div class="box box-solid">
-    <div class="box-header with-border">
-        <i class="fa fa-file-text-o"></i>
-        <h3 class="box-title">JSON Data</h3>
+<div class="box box-solid" ng-if="isShowJson">
+    <div class="box-header with-border" ng-click="hideJson()">
+        <button class="btn btn-danger" type="button" ng-click="hideJson()">되돌아 가기</button>
     </div><!-- /.box-header -->
     <div class="box-body">
         <pre>{{g_G.olle_finderData.json_data_eOLLE_FIND | json}}</pre>
+        <dl class="dl-horizontal">
+            <div>
+                <dt>Transaction Id</dt>
+                <dd><a ng-click="showTx(g_G.olle_finderData.json_data_eOLLE_FIND.txid)">{{getShortdString(g_G.olle_finderData.json_data_eOLLE_FIND.txid)}}</a></dd>
+            </div>
+        </dl>
+        <pre ng-if="g_G.olle_finderData.olleTransaction">{{g_G.olle_finderData.olleTransaction | json}}</pre>
+        <div ng-if="g_G.olle_finderData.olleBlockHash">
+            <dl class="dl-horizontal">
+                <div>
+                    <dt>Block Hash</dt>
+                    <dd><a ng-click="showBlock(g_G.olle_finderData.olleBlockHash)">{{getShortdString(g_G.olle_finderData.json_data_eOLLE_FIND.txid)}}</a></dd>
+                </div>
+            </dl>
+            <pre ng-if="g_G.olle_finderData.olleTransaction">{{g_G.olle_finderData.olleBlock | json}}</pre>
+        </div>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
 <script>
-        //Date range picker
-        $('#reservation').daterangepicker({timePicker: false, timePickerIncrement: 30, format: 'YYYY-MM-DD'});
-    
+//Date range picker
+$('#reservation').daterangepicker({ timePicker: false, timePickerIncrement: 30, format: 'YYYY-MM-DD' });
 </script>

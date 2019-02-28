@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="raspinodemon">
+<html lang="en" ng-app="olleMonitor">
 
 <head>
     <title>Olle Nature Point Network Monitor</title>
@@ -11,7 +11,6 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-
     <!-- DataTables -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/AdminLTE.min.css">
@@ -23,7 +22,6 @@
     <link rel="stylesheet" href="lte/plugins/iCheck/flat/blue.css">
     -->
     <link rel="stylesheet" href="lte/plugins/iCheck/square/blue.css">
-
     <!-- Morris chart -->
     <link rel="stylesheet" href="lte/plugins/morris/morris.css">
     <!-- jvectormap -->
@@ -37,7 +35,7 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css">
 </head>
 
-<body  class="hold-transition skin-blue sidebar-mini" ng-controller="monitorCtrl">
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="monitorCtrl">
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
@@ -86,11 +84,11 @@
     </div>
     <div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
         <!-- https://github.com/CodeSeven/toastr -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/js/adminlte.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.16.0/moment.min.js"></script>
@@ -108,7 +106,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
         <!-- https://github.com/CodeSeven/toastr -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
         <script src="lte/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- datepicker -->
         <script src="lte/plugins/datepicker/bootstrap-datepicker.js"></script>
@@ -121,7 +118,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
         <!-- iCheck -->
         <script src="lte/plugins/iCheck/icheck.min.js"></script>
-
         <!-- AdminLTE App -->
         <script src="lte/dist/js/app.min.js"></script>
         <!-- AdminLTE for demo purposes -->

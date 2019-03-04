@@ -36,6 +36,9 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
         }
         //console.log("ollefinderCtrl.js called");
         $scope.eOLLE_READ_LOT = function(txid, record) {
+            g_G.olle_finderData.olleBlock = null;
+            g_G.olle_finderData.olleTransaction = null;
+
             $scope.json_data = {};
             $http.get(apiUrlStart + '/eOLLE_READ_LOT?txid=' + txid + '&_id=' + record)
                 .then(function success(res) {
@@ -154,7 +157,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
 
         $scope.getShortdString = function(txid) {
 
-            if (g_G.isMobile()) {
+            if (txid && g_G.isMobile()) {
                 return txid.substring(0, 15) + '...';
             }
             return txid;
@@ -180,6 +183,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
         }
 
         $scope.showTx = function(txid) {
+            g_G.olle_finderData.olleBlock = null;
             console.log('showTx');
             if (g_G.olle_finderData.olleTransaction == null) {
 
@@ -194,16 +198,13 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
         }
 
         $scope.showBlock = function(txid) {
-            if (g_G.olle_finderData.olleBlock) {
-                g_G.olle_finderData.olleBlock = null;
-            } else {
-                var url = apiUrlStart + '/getblock/' + txid;
-                $http.get(url)
-                    .then(function success(res) {
-                        g_G.olle_finderData.olleBlock = res.data;
-                    });
-
-            }
+            if (g_G.olle_finderData.olleBlock) return;
+            var url = apiUrlStart + '/getblock/' + txid;
+            $http.get(url)
+                .then(function success(res) {
+                    console.log('showBlock : ',res.data);
+                    g_G.olle_finderData.olleBlock = res.data;
+                });
 
         }
 

@@ -18,11 +18,12 @@
 <loading></loading>
 <hr>
 <div class="row">
-    <div class="col-md-5">
+    <div class11="col-md-5">
         <div class="box box-solid">
             <div class="box-header with-border">
                 <i class="fa fa-th-list"></i>
-                <h3 class="box-title">올레 정보 <{{getOlleDataType(g_G.olle_finderData.eOLLE_READ_LOT)}}></h3>
+                <h3 class="box-title">올레 정보 < {{getOlleDataType(g_G.olle_finderData.eOLLE_READ_LOT)}}>
+                </h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <dl class="dl-horizontal" ng-if="g_G.olle_finderData.eOLLE_READ_LOT_olle">
@@ -34,14 +35,30 @@
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </div><!-- ./col -->
-    <div class="col-md-7">
+    <div clas11s="col-md-7">
         <div class="box box-solid">
             <div class="box-header with-border">
                 <i class="fa fa-file-text-o"></i>
-                <h3 class="box-title">JSON Data</h3>
+                <h3 class="box-title">Olle Data</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <pre ng-if="json_data!=null">{{json_data | json}}</pre>
+                <dl class="dl-horizontal">
+                    <div>
+                        <dt>Transaction Id</dt>
+                        <dd><a ng-click="showTx(json_data.txid)">{{getShortdString(json_data.txid)}}</a></dd>
+                    </div>
+                </dl>
+                <pre ng-if="g_G.olle_finderData.olleTransaction">{{g_G.olle_finderData.olleTransaction | json}}</pre>
+                <div ng-if="g_G.olle_finderData.olleBlockHash">
+                    <dl class="dl-horizontal">
+                        <div>
+                            <dt>Block Hash</dt>
+                            <dd><a ng-click="showBlock(g_G.olle_finderData.olleBlockHash)">{{getShortdString(g_G.olle_finderData.olleBlockHash)}}</a></dd>
+                        </div>
+                    </dl>
+                    <pre ng-if="g_G.olle_finderData.olleBlock">{{g_G.olle_finderData.olleBlock | json}}</pre>
+                </div>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </div><!-- ./col -->

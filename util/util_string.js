@@ -3,7 +3,7 @@
 const fs = require('fs');
 const async = require('async');
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
 
     // str에  strList에 있는 스트링이 포함 되어있다면 true
     g_G.isContainString = (str, strList) => {

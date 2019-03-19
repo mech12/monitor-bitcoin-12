@@ -1,7 +1,7 @@
 'use strict'
 
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
 
 
     if (Array.prototype.shuffle == null) {

@@ -58,7 +58,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                     g_G.error("eUSER_LOGIN err=", ret.error);
                     return;
                 }
-                if (ret.user.role != 'admin') return g_G.toastr.error('권한이 없습니다.')
+                if (ret.user.role != 'admin' && ret.user.role != 'admin-olle') return g_G.toastr.error('권한이 없습니다.')
 
                 Cookies.set('olle_monitor_admin', rq, { expires: 1 });
                 Cookies.set('eUSER_LOGIN', ret, { expires: 1 });

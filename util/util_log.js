@@ -149,7 +149,7 @@ var clog = new Clog;
 
 
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
 
     clog.configure(g_G.clog_config);
 

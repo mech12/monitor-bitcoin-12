@@ -3,7 +3,7 @@
 const fs = require('fs');
 const async = require('async');
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
 
 
     g_G.ValidateIPaddress = (ipaddress) => {

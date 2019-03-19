@@ -13,7 +13,7 @@ moment.createFromInputFallback = function(config) {
     config._d = new Date(config._i);
 };
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
 
     Error.new = function(e) {
         var err = new Error();

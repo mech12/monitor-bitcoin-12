@@ -24,7 +24,9 @@ module.exports = ['$scope', '$http', 'socketio', 'apiUrlStart', function ($scope
         if($scope.mempoolEntry)$scope.mempoolEntry.bytes += tx.byteLength;
         if($scope.mempoolEntry)$scope.mempoolEntry.fitsToHowManyBlocks = Math.ceil($scope.mempoolEntry.bytes/1000000);
         if ($scope.txes.length > $scope.showN) $scope.txes.pop();
+        console.log('rawtxListener tx=',tx);
         $scope.txes.unshift(tx);
+        console.log('$scope.txes =',$scope.txes);
     }
 
     socketio.on('rawtx', $scope.rawtxListener);

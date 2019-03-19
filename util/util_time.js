@@ -10,7 +10,7 @@ const readline = require('readline');
 
 
 
-exports.Init = function(g_G) {
+exports.Init = async function(g_G) {
     var FMT = 'YYYY-M-DD HH:mm:ss';
 
     g_G.UnixTime2Date = function (unixTime){

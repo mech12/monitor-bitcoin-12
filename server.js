@@ -134,8 +134,8 @@ function getFeeOfTx(txid) {
         bitcoinRPC.callAsync('getmempoolentry', [txid])
             .then(function(res) {
                 if (res.result == null) {
-                    console.error('res.result==null ', res.error.message);
-                    return resolve('unkown');
+                    //console.error('res.result==null ', res.error.message);
+                    return resolve(0);
                 }
                 resolve(res.result.fee * 100000000);
             })
@@ -151,7 +151,7 @@ function decoderawtransaction(txid, hex) {
         console.log('decoderawtransaction txid=', txid);
         bitcoinRPC.callAsync('decoderawtransaction', [hex])
             .then(function(res) {
-                console.log('res = ', res);
+                //console.log('res = ', res);
                 resolve(res);
             })
             .catch(function(err) {
@@ -164,7 +164,7 @@ function decoderawtransaction(txid, hex) {
 sock_zmq.on('message', function(topic, message) {
 
     //g_G.clog('sock_zmq', 'topic = ', topic.toString());//, ' message= ', message);
-    g_G.clog('sock_zmq', 'topic = ', topic.toString(), ' message= ', message);
+    //g_G.clog('sock_zmq', 'topic = ', topic.toString(), ' message= ', message);
     if (topic.toString() === 'rawtx') {
         var txHex = message.toString('hex');
         try {
@@ -187,9 +187,15 @@ sock_zmq.on('message', function(topic, message) {
         });
 
         decoderawtransaction(txid, txHex).then(res => {
-            //console.dir('decoderawtransaction = ', res.result);
-            res.result.vin.forEach(v => { console.log('vin =', v); })
-            res.result.vout.forEach(v => { console.log('vout =', v); })
+            res.result.vin.forEach(v => {
+                console.log('vin txid=', v.txid, 'vout=', v.vout);
+            })
+            res.result.vout.forEach(v => {
+
+                if (v.scriptPubKey) {
+                    console.log('vout value=', v.value, ' address=', v.scriptPubKey.addresses);
+                }
+            })
 
         });
 

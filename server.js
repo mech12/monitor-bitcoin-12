@@ -21,6 +21,9 @@ var Promise = require('bluebird');
 var Queue = require('simple-promise-queue');
 Queue.setPromise(require('bluebird'));
 var request = require('request-promise');
+
+const _ = require('lodash');
+const Buffer = require('buffer').Buffer;
 var bitcoinRPC = require("node-bitcoin-rpc");
 const bitcoinCore = require('bitcoin-core');
 const cors = require('cors')
@@ -35,7 +38,7 @@ const rootDir = path.normalize(__dirname);
 //console.log('config.rootDir=' , rootDir , '__dirname=',__dirname);
 global.g_G = require('./mech12/g_G').Init({
     globalVar: rootDir + '/setting_global',
-    
+
     loadingPath: rootDir + '/util/',
     loadingPattern: 'util_',
 
@@ -94,7 +97,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 sock_zmq.connect(config.get('Zmq.socket'));
-config.get('Zmq.events').forEach(function(event) {
+
+var events = [
+    'hashtx',
+    'hashblock',
+    'rawblock',
+    'rawtx'
+].forEach(function(event) {
     sock_zmq.subscribe(event);
 });
 
@@ -136,51 +145,74 @@ function getFeeOfTx(txid) {
     });
 }
 
+function decoderawtransaction(txid, hex) {
+    //returns a promise and fetches tx output value given by index
+    return queue.pushTask((resolve, reject) => {
+        console.log('decoderawtransaction txid=', txid);
+        bitcoinRPC.callAsync('decoderawtransaction', [hex])
+            .then(function(res) {
+                console.log('res = ', res);
+                resolve(res);
+            })
+            .catch(function(err) {
+                console.error('decoderawtransaction = ', err);
+                reject(err);
+            });
+    });
+}
+
 sock_zmq.on('message', function(topic, message) {
 
-    var events = [
-        'hashtx',
-        'hashblock',
-        'rawtx'
-    ];
-
-    g_G.clog('sock_zmq', 'topic = ', topic.toString());//, ' message= ', message);
-    events.forEach(function(event) {
-        if (topic.toString() === event) {
-            if (event === 'rawtx') {
-                var txHex = message.toString('hex');
-                try {
-                    var tx = bjs.Transaction.fromHex(txHex);
-                } catch (err) {
-                    console.error('initial tx creation from raw hex failed!')
-                    console.error(err);
-                }
-                if (tx.isCoinbase()) {
-                    //this is a coinbase tx, no input = no fees
-                    return;
-                }
-                var txid = tx.getId();
-
-                getFeeOfTx(txid)
-                    .then(function(fee) {
-                        io.emit(topic.toString(), {
-                            data: txHex,
-                            fee: fee
-                        });
-                        console.log('fee is ' + fee + ' for txid: ' + txid);
-                    })
-                    .catch(function(err) {
-                        console.error('There was an error during getmempoolentry RPC');
-                        console.error('error is: ' + err);
-                    });
-
-            } else io.emit(topic.toString(), { data: message.toString('hex') });
+    //g_G.clog('sock_zmq', 'topic = ', topic.toString());//, ' message= ', message);
+    g_G.clog('sock_zmq', 'topic = ', topic.toString(), ' message= ', message);
+    if (topic.toString() === 'rawtx') {
+        var txHex = message.toString('hex');
+        try {
+            var tx = bjs.Transaction.fromHex(txHex);
+        } catch (err) {
+            console.error('initial tx creation from raw hex failed!')
+            console.error(err);
         }
-    });
+        if (tx.isCoinbase()) {
+            //this is a coinbase tx, no input = no fees
+            return;
+        }
+        var txid = tx.getId();
+
+        _.forEach(tx.outs, out => {
+            try {
+                var address = bjs.address.fromOutputScript(out.script);
+                if (address) console.log('outaddr = ', address);
+            } catch (e) {}
+        });
+
+        decoderawtransaction(txid, txHex).then(res => {
+            //console.dir('decoderawtransaction = ', res.result);
+            res.result.vin.forEach(v => { console.log('vin =', v); })
+            res.result.vout.forEach(v => { console.log('vout =', v); })
+
+        });
+
+
+        getFeeOfTx(txid)
+            .then(function(fee) {
+                io.emit(topic.toString(), {
+                    data: txHex,
+                    fee: fee
+                });
+                console.log('fee is ' + fee + ' for txid: ' + txid);
+            })
+            .catch(function(err) {
+                console.error('There was an error during getmempoolentry RPC');
+                console.error('error is: ' + err);
+            });
+
+
+
+    } else io.emit(topic.toString(), { data: message.toString('hex') });
 
     //console.log('received a message related to:', topic.toString(), 'containing message:', message.toString('hex'));
 });
 
 
 g_G.SERVER_IS_MAINTENANCE = 'RUN';
-

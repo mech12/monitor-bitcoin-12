@@ -145,7 +145,7 @@ function getFeeOfTx(txid) {
     });
 }
 
-function decoderawtransaction(txid, hex) {
+async function decoderawtransaction(txid, hex) {
     //returns a promise and fetches tx output value given by index
     return queue.pushTask((resolve, reject) => {
         console.log('decoderawtransaction txid=', txid);
@@ -161,7 +161,7 @@ function decoderawtransaction(txid, hex) {
     });
 }
 
-sock_zmq.on('message', function(topic, message) {
+sock_zmq.on('message', async function(topic, message) {
 
     //g_G.clog('sock_zmq', 'topic = ', topic.toString());//, ' message= ', message);
     //g_G.clog('sock_zmq', 'topic = ', topic.toString(), ' message= ', message);
@@ -186,19 +186,16 @@ sock_zmq.on('message', function(topic, message) {
             } catch (e) {}
         });
 
-        decoderawtransaction(txid, txHex).then(res => {
-            res.result.vin.forEach(v => {
-                console.log('vin txid=', v.txid, 'vout=', v.vout);
-            })
-            res.result.vout.forEach(v => {
+        var res = await decoderawtransaction(txid, txHex);
+        res.result.vin.forEach(v => {
+            console.log('vin txid=', v.txid, 'vout=', v.vout);
+        })
+        res.result.vout.forEach(v => {
 
-                if (v.scriptPubKey) {
-                    console.log('vout value=', v.value, ' address=', v.scriptPubKey.addresses);
-                }
-            })
-
-        });
-
+            if (v.scriptPubKey) {
+                console.log('vout value=', v.value, ' address=', v.scriptPubKey.addresses);
+            }
+        })
 
         getFeeOfTx(txid)
             .then(function(fee) {

@@ -128,7 +128,7 @@ g_G.bitcoinClient = new bitcoinCore({
 });
 
 
-function getFeeOfTx(txid) {
+async function getFeeOfTx(txid) {
     //returns a promise and fetches tx output value given by index
     return queue.pushTask(function getInputValues(resolve, reject) {
         bitcoinRPC.callAsync('getmempoolentry', [txid])

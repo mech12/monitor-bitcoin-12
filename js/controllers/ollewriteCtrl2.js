@@ -56,11 +56,12 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             var prevCategory = null;
             var categoryData = {};
             if (csv.length <= 1) continue;
-            if (fields.length != csv.length) {
-                console.error('fields', fields, 'csv', csv);
-                return console.error('98 fields.length!=csv.length');
-            }
+            // if (fields.length != csv.length) {
+            //     console.error('fields', fields, 'csv', csv);
+            //     return console.error('98 fields.length!=csv.length',fields.length ,csv.length);
+            // }
             for (var fieldIdx = 1; fieldIdx < fields.length; ++fieldIdx) {
+                if(fieldIdx>= csv.length) break;
 
                 var field = fields[fieldIdx];
                 if (Array.isArray(field) == false) return console.error("324 Array.isArray(field)==false");

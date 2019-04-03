@@ -1,50 +1,95 @@
-<div class="box" ng-if="isShowJson==false">
-    <div class="box-header">
-        <div class="col-md-4">
-            <div style="display: inline-block">
-                <label>날짜범위 :</label>
+<div ng-if="isShowJson==false">
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">
+                <label class="box-title">날짜범위 (03/10/2019 - 03/30/2019)</label>
             </div>
-            <div style="display: inline-block">
+            <div class="box-body">
                 <div class="input-group">
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="reservation" ng-model="g_G.olle_finderData.searchDate">
+                    <input type="text" class="form-control pull-right" id="olleFindDateRange" ng-model="g_G.olle_finderData.searchDate">
                 </div><!-- /.input group -->
             </div>
-        </div><!-- /.form group -->
-        <div class="col-md-4">
-            <div class="input-group">
-                <div style="display: inline-block">
-                    <label>카테고리 :</label>
-                </div>
-                <div style="display: inline-block">
+        </div><!-- /.box -->
+        <div class="box">
+            <div class="box-header">
+                <label class="box-title">카테고리</label>
+            </div>
+            <div class="box-body">
+                <div class="input-group">
                     <select ng-model="g_G.olle_finderData.categoryCurr">
                         <option ng-repeat="val in g_G.olle_finderData.EOlleDataType">{{val}}</option>
                     </select>
-                </div>
+                </div><!-- /.input group -->
             </div>
-            <div class="input-group">
-                <div style="display: inline-block">
-                    <label>검색옵션 :</label>
-                </div>
-                <div style="display: inline-block">
-                    <select ng-model="g_G.olle_finderData.searchOption1" ng-change="update_searchOption1()">
-                        <option selected="">--------</option>
-                        <option ng-repeat="val in getCategoryByEOlleDataType()">{{val}}</option>
-                    </select>
-                </div>
-            </div>
+        </div><!-- /.box -->
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-danger btn-block btn-lg" type="button" ng-click="eOLLE_FIND()">Go!</button>
+            </span>
         </div>
-        <div class="col-md-4">
-            <div class="input-group">
-                <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.olle_finderData.searchString">
-                <span class="input-group-btn">
-                    <button class="btn btn-danger" type="button" ng-click="eOLLE_FIND()">Go!</button>
-                </span>
+    </div><!-- /.form group -->
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">
             </div>
-        </div>
-    </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <label class="box-title">검색옵션 1</label>
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="val in getCategoryByEOlleDataType()" ng-click="update_searchOption(val)">{{val}}</li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <input type="text" class="form-control" ng-model="g_G.olle_finderData.searchOption1" />
+                    </div><!-- /input-group -->
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.olle_finderData.searchString1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="box-title">검색옵션 2</label>
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="val in getCategoryByEOlleDataType()" ng-click="update_searchOption2(val)">{{val}}</li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <input type="text" class="form-control" ng-model="g_G.olle_finderData.searchOption2" />
+                    </div><!-- /input-group -->
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.olle_finderData.searchString2">
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+                <div class="row">
+                    <label class="box-title">검색옵션 3</label>
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="val in getCategoryByEOlleDataType()" ng-click="update_searchOption3(val)">{{val}}</li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <input type="text" class="form-control" ng-model="g_G.olle_finderData.searchOption3" />
+                    </div><!-- /input-group -->
+                    <div class="input-group margin">
+                        <div class="input-group-btn">
+                            <input type="text" class="form-control with-danger-addon" placeholder="Search for..." ng-model="g_G.olle_finderData.searchString3">
+                        </div>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div><!-- /.box -->
+    </div>
     <div class="box-body">
         <div ng-if="g_G.olle_finderData.eOLLE_FIND==null">data not found</div>
         <table ng-if="g_G.olle_finderData.eOLLE_FIND" id="olleDataTable" class="table table-bordered table-striped table-hover">
@@ -98,6 +143,6 @@
     </div><!-- /.box-body -->
 </div><!-- /.box -->
 <script>
-//Date range picker
-$('#reservation').daterangepicker({ timePicker: false, timePickerIncrement: 30, format: 'YYYY-MM-DD' });
+console.log('Date range picker');
+$('#olleFindDateRange').daterangepicker({ timePicker: false, timePickerIncrement: 30, format: 'YYYY-MM-DD' });
 </script>

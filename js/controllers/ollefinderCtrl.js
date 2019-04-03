@@ -3,7 +3,9 @@ var config = require("config");
 
 
 g_G.olle_finderData.searchDate = null;
-g_G.olle_finderData.searchString = null;
+g_G.olle_finderData.searchString1 = '';
+g_G.olle_finderData.searchString2 = '';
+g_G.olle_finderData.searchString3 = '';
 g_G.olle_finderData.EOlleDataType = [];
 g_G.olle_finderData.eOLLE_FIND = null;
 
@@ -11,7 +13,9 @@ g_G.olle_finderData.categoryCurr = null;
 
 g_G.olle_finderData.EOlleDataType = Object.keys(g_G.olle_finderData.category_table);
 g_G.olle_finderData.categoryCurr = g_G.olle_finderData.EOlleDataType[0];
-g_G.olle_finderData.searchOption1 = '--------';
+g_G.olle_finderData.searchOption1 = '';
+g_G.olle_finderData.searchOption2 = '';
+g_G.olle_finderData.searchOption3 = '';
 // v = v.concat();
 // g_G.olle_finderData.category2 = v.filter(function(d) {return d != g_G.olle_finderData.searchOption1;});
 // g_G.olle_finderData.searchOption2 = null;//g_G.olle_finderData.category2[0];
@@ -33,6 +37,23 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
         $scope.hideJson = function() {
             $scope.isShowJson = false;
             g_G.olle_finderData.olleTransaction = null;
+        }
+
+        $scope.update_searchOption = function(val) {
+            console.log('update_searchOption=', val);
+            g_G.olle_finderData.searchOption1 = val;
+
+        }
+
+        $scope.update_searchOption2 = function(val) {
+            console.log('update_searchOption2=', val);
+            g_G.olle_finderData.searchOption2 = val;
+
+        }
+        $scope.update_searchOption3 = function(val) {
+            console.log('update_searchOption3=', val);
+            g_G.olle_finderData.searchOption3 = val;
+
         }
         //console.log("ollefinderCtrl.js called");
         $scope.eOLLE_READ_LOT = function(txid, record) {
@@ -87,23 +108,39 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
 
             g_G.olle_finderData.eOLLE_FIND = null;
             g_G.olle_finderData.json_data_eOLLE_FIND = null;
-            var field = g_G.olle_finderData.searchOption1;
-            field = field.trim();
-            if (field == '--------') field = null;
-
             var category;
             if (g_G.olle_finderData.categoryCurr)
                 category = g_G.olle_finderData.category_table[g_G.olle_finderData.categoryCurr]
             var query = {
                 category: category,
-                field: field,
-                search: g_G.olle_finderData.searchString,
                 skip: 0,
                 count: 1000,
                 start: start,
                 end: end,
             }
 
+            var field = g_G.olle_finderData.searchOption1.trim();
+            var searchStr = g_G.olle_finderData.searchString1.trim();
+            if (field && field.length > 0 && searchStr.length > 0) {
+                query.field = field;
+                query.search = searchStr;
+            }
+
+            field = g_G.olle_finderData.searchOption2.trim();
+            searchStr = g_G.olle_finderData.searchString2.trim();
+            if (field && field.length > 0 && searchStr.length > 0) {
+                query.field2 = field;
+                query.search2 = searchStr;
+            }
+
+            field = g_G.olle_finderData.searchOption3.trim();
+            searchStr = g_G.olle_finderData.searchString3.trim();
+            if (field && field.length > 0 && searchStr.length > 0) {
+                query.field3 = field;
+                query.search3 = searchStr;
+            }
+
+            console.log('query=', query);
             $http.post(g_G.olle_api_url + '/api/v3/eOLLE_FIND', query)
                 .then(function success(res) {
                     if (res.error) return console.error(' ', res.error);
@@ -202,7 +239,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart',
             var url = apiUrlStart + '/getblock/' + txid;
             $http.get(url)
                 .then(function success(res) {
-                    console.log('showBlock : ',res.data);
+                    console.log('showBlock : ', res.data);
                     g_G.olle_finderData.olleBlock = res.data;
                 });
 

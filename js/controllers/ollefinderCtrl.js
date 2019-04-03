@@ -9,7 +9,7 @@ g_G.olle_finderData.eOLLE_FIND = null;
 
 g_G.olle_finderData.categoryCurr = null;
 
-g_G.olle_finderData.EOlleDataType = Object.keys(g_G.olle_finderData.category);
+g_G.olle_finderData.EOlleDataType = Object.keys(g_G.olle_finderData.category_table);
 g_G.olle_finderData.categoryCurr = g_G.olle_finderData.EOlleDataType[0];
 g_G.olle_finderData.searchOption1 = '--------';
 // v = v.concat();

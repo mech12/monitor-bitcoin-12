@@ -36,10 +36,10 @@ module.exports = ["$stateProvider", "$urlRouterProvider", function($stateProvide
             templateUrl: "/templates/blockfinder.html",
             controller: require("./controllers/blockfinderCtrl")
         })
-        .state("ollewrite", {
-            url: "/ollewrite",
-            templateUrl: "/templates/ollewrite.html",
-            controller: require("./controllers/ollewriteCtrl")
+        .state("ollewrite2", {
+            url: "/ollewrite2",
+            templateUrl: "/templates/ollewrite2.html",
+            controller: require("./controllers/ollewriteCtrl2")
         })
         .state("login", {
             url: "/login",

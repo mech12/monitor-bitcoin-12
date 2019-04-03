@@ -34,7 +34,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
         }
 
-        console.log('fields=', fields);
+        //console.log('fields=', fields);
         var olleDataList = {};
         var lotField = fields[0];
         if (typeof lotField != 'string') return console.error("324 typeof fields[0] !='string'");
@@ -43,7 +43,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
         var olleData = null;
         for (var i = CSV_ROW_START; i < csvList.length; ++i) {
             var csv = csvList[i];
-            console.log('csv=', csv);
+            //console.log('csv=', csv);
             if (csv[0].length > 0) lot = csv[0];
 
             if (olleDataList[lot] == null) { // new olle data record
@@ -61,7 +61,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
             //     return console.error('98 fields.length!=csv.length',fields.length ,csv.length);
             // }
             for (var fieldIdx = 1; fieldIdx < fields.length; ++fieldIdx) {
-                if(fieldIdx>= csv.length) break;
+                if (fieldIdx >= csv.length) break;
 
                 var field = fields[fieldIdx];
                 if (Array.isArray(field) == false) return console.error("324 Array.isArray(field)==false");
@@ -74,7 +74,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                     prevCategory = currCategory;
                 }
                 var currFieldData = csv[fieldIdx]
-                console.log('currFieldData=', currFieldData, 'currCategory=[' + currCategory + '] prevCategory=[' + prevCategory + '] f2=', f2);
+                //console.log('currFieldData=', currFieldData, 'currCategory=[' + currCategory + '] prevCategory=[' + prevCategory + '] f2=', f2);
 
                 if (olleData[prevCategory] == null) {
                     olleData[prevCategory] = [];
@@ -82,7 +82,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
                 if (prevCategory != currCategory) {
                     if (Object.keys(categoryData).length > 0) {
-                        console.log('push1', 'currCategory=', currCategory, 'prevCategory=', prevCategory, categoryData);
+                        //console.log('push1', 'currCategory=', currCategory, 'prevCategory=', prevCategory, categoryData);
                         olleData[prevCategory].push(categoryData);
                     }
                     categoryData = {};
@@ -93,7 +93,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
             }
             if (Object.keys(categoryData).length > 0) {
-                console.log('push2', prevCategory, categoryData);
+                //console.log('push2', prevCategory, categoryData);
                 olleData[prevCategory].push(categoryData);
             }
         }
@@ -105,6 +105,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
 
 
     $scope.send_eOLLE_WRITE_MULTY_VER2 = function() {
+        $scope.rq.OLLE_WRITE_MULTY_result = "결과 대기중";
         if ($scope.rq.json == null) return console.error('$scope.rq.json==null');
         var rq = { type: $scope.rq.categoryOrg, data: $scope.rq.json }
 
@@ -119,6 +120,11 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                     g_G.toastr.error('네트웍 에러', "처리 실패.");
                     return console.error('error 2', rs.error);
                 }
+                $scope.rq.OLLE_WRITE_MULTY_result = rs.result.map(function(r) {
+                    console.log('eOLLE_WRITE_MULTY result txid= ',r.txid);
+                    return { LOT: r.dataList[0]['Lot 번호'], txid: r.txid  , record_id : r.dataList[0]._id};
+                });
+
 
                 g_G.toastr.success('전송 성공', "DB 캐싱이 되었습니다.");
                 console.log('eOLLE_WRITE_MULTY ', rs);
@@ -127,6 +133,7 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
     }
 
     $scope.send_eOLLE_WRITE_MULTY = function() {
+        $scope.rq.OLLE_WRITE_MULTY_result = "결과 대기중";
         var rq = $scope.rq;
         if (g_G.checkString(rq, 'categoryOrg')) return;
         if (g_G.checkString(rq, 'csv')) return;
@@ -160,9 +167,8 @@ module.exports = ['$http', '$scope', 'apiUrlStart', function($http, $scope, apiU
                 }
 
                 g_G.toastr.success('전송 성공', "DB 캐싱이 되었습니다.");
-                console.log('eOLLE_WRITE_MULTY ', rs);
+                console.log('eOLLE_WRITE_MULTY =', rs);
             });
     }
 
 }];
-

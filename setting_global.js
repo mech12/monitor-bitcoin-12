@@ -15,7 +15,7 @@ exports.Init = function() {
             BTC_fee: 14, // g_G.calcCurrentBitcoinFees()에 의해 재계산됨.
             //{ fastestFee: 14, halfHourFee: 14, hourFee: 8 }
             MIN_confirmations: 1,
-            olle_fee: 0.00001012,
+            olle_fee: 0.00001013,
         },
         ENV: {
             queue_endpoint: { redis: { port: 10020, host: 'localhost', password: '12ships$' } },
